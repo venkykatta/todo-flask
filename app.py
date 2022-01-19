@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3  
+import sqlite3
+import os
 
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///home/venky/Venky/todo-flask/example.db'
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///home/venky/Venky/todo-flask/example.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -47,4 +49,4 @@ def delete(todo_id):
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
